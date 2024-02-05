@@ -25,14 +25,19 @@ install a plex mediaserver on a raspberry pi.
     sudo apt-get install apt-transport-https
     ```
 
-3.  add plex repository
+3.  add pley to keyring
 
     ``` bash
     curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
+    ```
+
+4.  add plex repository
+
+    ``` bash
     echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
     ```
 
-4.  update repositories and install plex
+5.  update repositories and install plex
 
     ``` bash
     sudo apt-get update

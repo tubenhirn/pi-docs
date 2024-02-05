@@ -16,18 +16,22 @@ install a plex mediaserver on a raspberry pi.
     sudo apt-get upgrade
     #+end_src
 
-2. install https package
+1. install https package
     #+begin_src bash
     sudo apt-get install apt-transport-https
     #+end_src
 
-3. add plex repository
-    #+begin_src bash
+1. add pley to keyring
+   #+begin_src bash
     curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
+   #+end_src
+
+1. add plex repository
+    #+begin_src bash
     echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
     #+end_src
 
-4. update repositories and install plex
+1. update repositories and install plex
     #+begin_src bash
     sudo apt-get update
     sudo apt install plexmediaserver
@@ -40,12 +44,12 @@ install a plex mediaserver on a raspberry pi.
     sudo apt-get install hfsplus hfsutils hfsprogs
     #+end_src
 
-3. get disk uuid for usb drive
+1. get disk uuid for usb drive
    #+begin_src bash
     sudo blkid /dev/<YOUR_DRIVE>
    #+end_src
 
-2. auto-mount usb drive with fstab config
+1. auto-mount usb drive with fstab config
    #+begin_src bash
     sudo mkdir /mnt/<MOUNT_NAME>
     UUID="<DISK_UUID>" /mnt/<MOUNT_NAME> hfsplus force,auto,uid=1000,users,rw 0 2
@@ -64,7 +68,7 @@ install a plex mediaserver on a raspberry pi.
     sudo apt-get install netatalk
     #+end_src
 
-2. configure
+1. configure
    #+begin_src bash
    sudo vim /etc/netatalk/apf.conf
    #+end_src
