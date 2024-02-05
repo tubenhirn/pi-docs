@@ -40,7 +40,7 @@ install a plex mediaserver on a raspberry pi.
     sudo apt-get install hfsplus hfsutils hfsprogs
     #+end_src
 
-3. get <DISK_UUID> uuid for usb drive
+3. get disk uuid for usb drive
    #+begin_src bash
     sudo blkid /dev/<YOUR_DRIVE>
    #+end_src
