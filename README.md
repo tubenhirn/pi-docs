@@ -1,7 +1,3 @@
----
-author: tubenhirn
----
-
 # plex mediaserver for pi
 
 install a plex mediaserver on a raspberry pi.
