@@ -79,7 +79,6 @@ install a plex mediaserver on a raspberry pi.
     path = /mnt/<MOUNT_NAME>
    #+end_src
 
-
 ** configure reboot with crontab
 
 1. configure reboot once a month (https://crontab.guru/)
@@ -87,4 +86,17 @@ install a plex mediaserver on a raspberry pi.
     sudo crontab -e
 
     0 1 1 * * /sbin/shutdown -r now
+   #+end_src
+
+
+** install plugin for audiobooks
+
+1. navigate to the plugins directory
+   #+begin_src bash
+    cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+   #+end_src
+
+1. clone the plugin with git
+   #+begin_src bash
+    git clone https://github.com/djdembeck/Audnexus.bundle.git
    #+end_src

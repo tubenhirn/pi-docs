@@ -101,3 +101,17 @@ sudo apt-get install vim
 
     0 1 1 * * /sbin/shutdown -r now
     ```
+
+## install plugin for audiobooks
+
+1.  navigate to the plugins directory
+
+    ``` bash
+    cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+    ```
+
+2.  clone the plugin with git
+
+    ``` bash
+    git clone https://github.com/djdembeck/Audnexus.bundle.git
+    ```
