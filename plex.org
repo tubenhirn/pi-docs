@@ -55,6 +55,11 @@ install a plex mediaserver on a raspberry pi.
     UUID="<DISK_UUID>" /mnt/<MOUNT_NAME> hfsplus force,auto,uid=1000,users,rw 0 2
    #+end_src
 
+1. create a folder and set proper permissions
+   #+begin_src bash
+    sudo chmod 755 -R /mnt/<MOUNT_NAME>/<FOLDER>
+   #+end_src
+
 ** install vim
 
     #+begin_src bash
@@ -94,6 +99,11 @@ install a plex mediaserver on a raspberry pi.
 1. navigate to the plugins directory
    #+begin_src bash
     cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+   #+end_src
+
+1. set proper permissions
+   #+begin_src bash
+    sudo chown -R plex:plex /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
    #+end_src
 
 1. clone the plugin with git

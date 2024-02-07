@@ -65,6 +65,12 @@ install a plex mediaserver on a raspberry pi.
     UUID="<DISK_UUID>" /mnt/<MOUNT_NAME> hfsplus force,auto,uid=1000,users,rw 0 2
     ```
 
+4.  create a folder and set proper permissions
+
+    ``` bash
+    sudo chmod 755 -R /mnt/<MOUNT_NAME>/<FOLDER>
+    ```
+
 ## install vim
 
 ``` bash
@@ -110,7 +116,13 @@ sudo apt-get install vim
     cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
     ```
 
-2.  clone the plugin with git
+2.  set proper permissions
+
+    ``` bash
+    sudo chown -R plex:plex /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+    ```
+
+3.  clone the plugin with git
 
     ``` bash
     git clone https://github.com/djdembeck/Audnexus.bundle.git
