@@ -111,13 +111,13 @@ install a plex mediaserver on a raspberry pi.
 1. edit /boot/firmware/config.txt
 
    - append
-        #+begin_src bash
+        #+begin_src toml
                 [all]
                 dtoverlay=hifiberry-dacplus
         #+end_src
 
    - remove (existing)
-        #+begin_src bash
+        #+begin_src toml
                 dtparam=audio=on
                 dtoverlay=vc4-fkms-v3d,audio=off
                 dtoverlay=vc4-kms-v3d,noaudio

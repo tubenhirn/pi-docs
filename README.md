@@ -128,14 +128,14 @@ install a plex mediaserver on a raspberry pi.
 
     -   append
 
-        ``` bash
+        ``` toml
         [all]
         dtoverlay=hifiberry-dacplus
         ```
 
     -   remove (existing)
 
-        ``` bash
+        ``` toml
         dtparam=audio=on
         dtoverlay=vc4-fkms-v3d,audio=off
         dtoverlay=vc4-kms-v3d,noaudio
