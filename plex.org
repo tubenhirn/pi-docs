@@ -12,101 +12,128 @@ install a plex mediaserver on a raspberry pi.
 
 1. update pi os
     #+begin_src bash
-    sudo apt-get update
-    sudo apt-get upgrade
+        sudo apt-get update
+        sudo apt-get upgrade
     #+end_src
 
 1. install https package
     #+begin_src bash
-    sudo apt-get install apt-transport-https
+        sudo apt-get install apt-transport-https
     #+end_src
 
 1. add pley to keyring
    #+begin_src bash
-    curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
+        curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
    #+end_src
 
 1. add plex repository
     #+begin_src bash
-    echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+        echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
     #+end_src
 
 1. update repositories and install plex
     #+begin_src bash
-    sudo apt-get update
-    sudo apt install plexmediaserver
+        sudo apt-get update
+        sudo apt install plexmediaserver
     #+end_src
 
 ** install hfs+ drivers to mount mac hdd's
 
 1. install utils
     #+begin_src bash
-    sudo apt-get install hfsplus hfsutils hfsprogs
+        sudo apt-get install hfsplus hfsutils hfsprogs
     #+end_src
 
 1. get disk uuid for usb drive
    #+begin_src bash
-    sudo blkid /dev/<YOUR_DRIVE>
+        sudo blkid /dev/<YOUR_DRIVE>
    #+end_src
 
 1. auto-mount usb drive with fstab config
    #+begin_src bash
-    sudo mkdir /mnt/<MOUNT_NAME>
-    UUID="<DISK_UUID>" /mnt/<MOUNT_NAME> hfsplus force,auto,uid=1000,users,rw 0 2
+        sudo mkdir /mnt/<MOUNT_NAME>
+        UUID="<DISK_UUID>" /mnt/<MOUNT_NAME> hfsplus force,auto,uid=1000,users,rw 0 2
    #+end_src
 
 1. create a folder and set proper permissions
    #+begin_src bash
-    sudo chmod 755 -R /mnt/<MOUNT_NAME>/<FOLDER>
+        sudo chmod 755 -R /mnt/<MOUNT_NAME>/<FOLDER>
    #+end_src
-
-** install vim
-
-    #+begin_src bash
-    sudo apt-get install vim
-    #+end_src
 
 ** install and configure netatalk (access drive from a mac device)
 
 1. install
     #+begin_src bash
-    sudo apt-get install netatalk
+        sudo apt-get install netatalk
     #+end_src
 
 1. configure
    #+begin_src bash
-   sudo vim /etc/netatalk/apf.conf
+        sudo vim /etc/netatalk/apf.conf
    #+end_src
 
    - add the following lines
    #+begin_src bash
-    [plex drive]
-    path = /mnt/<MOUNT_NAME>
+        [plex drive]
+        path = /mnt/<MOUNT_NAME>
    #+end_src
 
 ** configure reboot with crontab
 
 1. configure reboot once a month (https://crontab.guru/)
    #+begin_src bash
-    sudo crontab -e
+        sudo crontab -e
 
-    0 1 1 * * /sbin/shutdown -r now
+        0 1 1 * * /sbin/shutdown -r now
    #+end_src
 
 
-** install plugin for audiobooks
+** install plex plugin for audiobooks
 
 1. navigate to the plugins directory
    #+begin_src bash
-    cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+        cd /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
    #+end_src
 
 1. set proper permissions
    #+begin_src bash
-    sudo chown -R plex:plex /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+        sudo chown -R plex:plex /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
    #+end_src
 
 1. clone the plugin with git
    #+begin_src bash
-    git clone https://github.com/djdembeck/Audnexus.bundle.git
+        git clone https://github.com/djdembeck/Audnexus.bundle.git
+   #+end_src
+
+
+** configure default audio device with hifiberry
+
+1. edit /boot/firmware/config.txt
+
+   - append
+        #+begin_src bash
+                [all]
+                dtoverlay=hifiberry-dacplus
+        #+end_src
+
+   - remove (existing)
+        #+begin_src bash
+                dtparam=audio=on
+                dtoverlay=vc4-fkms-v3d,audio=off
+                dtoverlay=vc4-kms-v3d,noaudio
+        #+end_src
+
+1. find device id for hifiberry
+   #+begin_src bash
+        aplay -l
+   #+end_src
+
+1. open config-file /etc/asound.conf and configure default device id (<ID>)
+   #+begin_src bash
+        pcm.!default { type hw card <ID> } ctl.!default { type hw card <ID> }
+   #+end_src
+
+1. delete user asound.conf (if exists)
+   #+begin_src bash
+        rm ~/.asoundrc
    #+end_src

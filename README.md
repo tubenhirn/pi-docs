@@ -71,12 +71,6 @@ install a plex mediaserver on a raspberry pi.
     sudo chmod 755 -R /mnt/<MOUNT_NAME>/<FOLDER>
     ```
 
-## install vim
-
-``` bash
-sudo apt-get install vim
-```
-
 ## install and configure netatalk (access drive from a mac device)
 
 1.  install
@@ -108,7 +102,7 @@ sudo apt-get install vim
     0 1 1 * * /sbin/shutdown -r now
     ```
 
-## install plugin for audiobooks
+## install plex plugin for audiobooks
 
 1.  navigate to the plugins directory
 
@@ -126,4 +120,42 @@ sudo apt-get install vim
 
     ``` bash
     git clone https://github.com/djdembeck/Audnexus.bundle.git
+    ```
+
+## configure default audio device with hifiberry
+
+1.  edit /boot/firmware/config.txt
+
+    -   append
+
+        ``` bash
+        [all]
+        dtoverlay=hifiberry-dacplus
+        ```
+
+    -   remove (existing)
+
+        ``` bash
+        dtparam=audio=on
+        dtoverlay=vc4-fkms-v3d,audio=off
+        dtoverlay=vc4-kms-v3d,noaudio
+        ```
+
+2.  find device id for hifiberry
+
+    ``` bash
+    aplay -l
+    ```
+
+3.  open config-file /etc/asound.conf and configure default device id
+    (\<ID\>)
+
+    ``` bash
+    pcm.!default { type hw card <ID> } ctl.!default { type hw card <ID> }
+    ```
+
+4.  delete user asound.conf (if exists)
+
+    ``` bash
+    rm ~/.asoundrc
     ```
